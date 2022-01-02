@@ -5,12 +5,12 @@ from astropy.time import Time
 
 print("CurVarEn ver. 0.03\nDrawing and reviewing variable stars observations")
 if len(sys.argv) == 1:  # checking argument presence
-    name = input("Enter file name:\n>> ")  # asking for file name to open
+    name = input("Enter file name:\n>> ")               # asking for file name to open
 else:
-    name = sys.argv[1]  # reading file name to open
+    name = sys.argv[1]                                  # reading file name to open
 
-f = open(name)  ## opening chosen file and reading...
-lines = f.readlines()  ## ...its content line by line
+f = open(name)                                          # opening chosen file and reading...
+lines = f.readlines()                                   # ...its content line by line
 print("Read succesfull. Lightcurve depicted.")
 
 root = tk.Tk()  # creating tkinter environment
@@ -19,36 +19,36 @@ root.title("CurVarEn")  #
 window = tk.Canvas(width=1280, height=720)  # creating tkinter window
 window.pack()
 
-window.create_rectangle(80, 0, 1300, 640)  # |^^^^^^^^^^^^^^^1200
-window.create_text(20, 5, text='mag')  # drawing    |
-window.create_text(15, 655, text='JD')  # axes    640|
+window.create_rectangle(80, 0, 1300, 640)           #            |^^^^^^^^^^^^^^^1200
+window.create_text(20, 5, text='mag')               # drawing    |
+window.create_text(15, 655, text='JD')              # axes    640|
 
-JDstr = []  # julian date list / strings
-magstr = []  # mag list / strings
-errstr = []  # error list / strings
-JD = []  # julian date list / floats
-mag = []  # mag list / floats
-error = []  # error list / floats
+JDstr = []      # julian date list / strings
+magstr = []     # mag list / strings
+errstr = []     # error list / strings
+JD = []         # julian date list / floats
+mag = []        # mag list / floats
+error = []      # error list / floats
 x = []
 y = []
 
 def separatestringvalues():
     global JDay
-    for i in range(2, len(lines)):  # separating...
+    for i in range(2, len(lines)):              # extraxting string data from source file
         if i == 2:
-            JDay = str(lines[i][0:7])  # checking julian day
-        if str(lines[i][16:18]) != '99':  # filtering invalid data
-            JDstr.append(lines[i][0:15])  # ...julian dates
-            magstr.append(lines[i][16:24])  # ...mags
-            errstr.append(lines[i][25:32])  # error
+            JDay = str(lines[i][0:7])           # checking julian day
+        if str(lines[i][16:18]) != '99':        # filtering invalid data
+            JDstr.append(lines[i][0:15])        # julian dates
+            magstr.append(lines[i][16:24])      # mags
+            errstr.append(lines[i][25:32])      # error
 
 def separatenumericalvalues():
-    for i in range(0, len(JDstr)):  # creating temporary variables
-        JD.append(round(float(JDstr[i][0:15]) % 1, 7))
-        mag.append(round(float(magstr[i][0:8]), 5))
-        error.append(round(float(errstr[i][0:8]), 5))
+    for i in range(0, len(JDstr)):                          # creating numerical data
+        JD.append(round(float(JDstr[i][0:15]) % 1, 7))      # julian dates
+        mag.append(round(float(magstr[i][0:8]), 5))         # mags
+        error.append(round(float(errstr[i][0:8]), 5))       # error
 
-def xyscale():
+def xyscale():              # creating variables for scaling purposes
     global Maxmagvalue
     global Minmagvalue
     global magscale
