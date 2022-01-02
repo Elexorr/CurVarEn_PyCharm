@@ -3,7 +3,6 @@ import tkinter as tk
 from astropy.modeling import models, fitting
 from astropy.time import Time
 
-
 print("CurVarEn ver. 0.03\nDrawing and reviewing variable stars observations")
 if len(sys.argv) == 1:  # checking argument presence
     name = input("Enter file name:\n>> ")               # asking for file name to open
