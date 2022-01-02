@@ -32,7 +32,6 @@ error = []  # error list / floats
 x = []
 y = []
 
-
 def separatestringvalues():
     global JDay
     for i in range(2, len(lines)):  # separating...
@@ -43,13 +42,11 @@ def separatestringvalues():
             magstr.append(lines[i][16:24])  # ...mags
             errstr.append(lines[i][25:32])  # error
 
-
 def separatenumericalvalues():
     for i in range(0, len(JDstr)):  # creating temporary variables
         JD.append(round(float(JDstr[i][0:15]) % 1, 7))
         mag.append(round(float(magstr[i][0:8]), 5))
         error.append(round(float(errstr[i][0:8]), 5))
-
 
 def xyscale():
     global Maxmagvalue
@@ -66,7 +63,6 @@ def xyscale():
             Minmagvalue = mag[i]
         magscale = round(Maxmagvalue - Minmagvalue, 5)
     timescale = round((JD[len(JD) - 1] - JD[0]), 7)
-
 
 ##  print(JD[i], mag[i], error[i], "<", Minmagvalue, Maxmagvalue, ">", magscale, timescale)
 
@@ -119,7 +115,6 @@ def drawcurve():
                                text=i + 1)
     window.update()
 
-
 def fitprocessing():
     fstart = int(input("Enter starting point\n>> "))
     fend = int(input("Enter ending point\n>> "))
@@ -153,7 +148,6 @@ def fitprocessing():
                                     104 + 1140 * (x[i] - JD[0]) / timescale,
                                     24 + 600 * (fitted_l(x[i]) - Minmagvalue) / magscale,  # graph
                                     fill='brown', outline='brown')
-
 
 separatestringvalues()
 separatenumericalvalues()
