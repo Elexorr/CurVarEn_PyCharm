@@ -66,7 +66,7 @@ def xyscale():              # creating variables for scaling purposes
 
 ##  print(JD[i], mag[i], error[i], "<", Minmagvalue, Maxmagvalue, ">", magscale, timescale)
 
-def drawcurve():
+def drawcurve():                # drawing axes, labels and curves
     window.create_line(75, 22 + 600 * (Minmagvalue - Minmagvalue) / magscale,
                        86, 22 + 600 * (Minmagvalue - Minmagvalue) / magscale)
     window.create_text(50, 22 + 600 * (Minmagvalue - Minmagvalue) / magscale, text=Minmagvalue)
@@ -94,17 +94,17 @@ def drawcurve():
     window.create_text(102 + 1140 * (JD[len(JD) - 1] - JD[0]) / timescale, 670, text=ISOtime[11:23])
 
     for i in range(0, len(JD)):
-        window.create_line(102 + 1140 * (JD[i] - JD[0]) / timescale,
+        window.create_line(102 + 1140 * (JD[i] - JD[0]) / timescale,        # drawing error bar
                            20 - error[i] * 1000 + 600 * (mag[i] - Minmagvalue) / magscale,
                            102 + 1140 * (JD[i] - JD[0]) / timescale,
                            25 + error[i] * 1000 + 600 * (mag[i] - Minmagvalue) / magscale,
                            fill='red')
-        window.create_rectangle(100 + 1140 * (JD[i] - JD[0]) / timescale,
-                                20 + 600 * (mag[i] - Minmagvalue) / magscale,  # drawing
+        window.create_rectangle(100 + 1140 * (JD[i] - JD[0]) / timescale,   # drawing lightucrve
+                                20 + 600 * (mag[i] - Minmagvalue) / magscale,
                                 104 + 1140 * (JD[i] - JD[0]) / timescale,
-                                24 + 600 * (mag[i] - Minmagvalue) / magscale,  # graph
+                                24 + 600 * (mag[i] - Minmagvalue) / magscale,
                                 fill='red', outline='red')
-        if i % 10 == 0:
+        if i % 10 == 0:                                                     # drawing point numbers
             window.create_line(102 + 1140 * (JD[i] - JD[0]) / timescale,
                                5 + 25 + error[i] * 1000 + 600 * (mag[i] - Minmagvalue) / magscale,
                                102 + 1140 * (JD[i] - JD[0]) / timescale,
@@ -116,14 +116,15 @@ def drawcurve():
     window.update()
 
 def fitprocessing():
-
-    fstart = int(input("Enter starting point\n>> "))
-    fend = int(input("Enter ending point\n>> "))
-    for i in range(fstart - 1, fend):
+    fstart = int(input("Enter starting point\n>> "))    # getting user starting and ending point
+    fend = int(input("Enter ending point\n>> "))        # of fitting
+    for i in range(fstart - 1, fend):                   # creating lists of chosen data
         x.append(JD[i])
         y.append(mag[i])
+
     modelchoice = input("Enter fitting model:\ng) Gaussian\nl) Lorentzian\nb) both\n>> ")
-    if modelchoice == 'g' or modelchoice == 'b':
+
+    if modelchoice == 'g' or modelchoice == 'b':    # fitting and drawing Gaussian model
         SD = (JD[fend] - JD[fstart]) / 4
         g_init = models.Gaussian1D(amplitude=magscale, mean=x[len(x) // 2], stddev=SD)
         fit_g = fitting.LevMarLSQFitter()
@@ -134,7 +135,8 @@ def fitprocessing():
                                     104 + 1140 * (x[i] - JD[0]) / timescale,
                                     24 + 600 * (fitted_g(x[i]) - Minmagvalue) / magscale,  # graph
                                     fill='blue', outline='blue')
-    if modelchoice == 'l' or modelchoice == 'b':
+
+    if modelchoice == 'l' or modelchoice == 'b':    # fitting and drawing Lorentzian model
         locmin = Maxmagvalue
         for i in range(0, len(y)):
             if y[i] < locmin:
