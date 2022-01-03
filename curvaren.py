@@ -150,6 +150,8 @@ def fitprocessing():
                                     24 + 600 * (fitted_l(x[i]) - Minmagvalue) / magscale,  # graph
                                     fill='brown', outline='brown')
 
+
+
 separatestringvalues()
 separatenumericalvalues()
 xyscale()
